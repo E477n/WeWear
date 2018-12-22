@@ -1,0 +1,39 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}
+    <title>WeWear-Trend</title>
+{% endblock %}
+{% block add-css-script %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Trend.css' %}"/>
+{% endblock %}
+{% block header-class %}<header class="home-background-basic img-shadow-basic">{% endblock %}
+</header>
+{% block body-container %}
+<div class="container text-align-center margin-top-100">
+    <div class="row row-adjust" id="productRow">
+{#        {% for pdc in products|slice:"3780:3800" %}#}
+{#        <div class="col-xs-6 col-sm-4 col-md-3 product-box" id="{{ pdc.wid }}">#}
+{#            <div class="row product-image-box">#}
+{#                <img src="/static/img/product-img/{{ pdc.wid }}.jpg"/>#}
+{#            </div>#}
+{#            <div class="row manipulateProduct">#}
+{#                <div class="col-xs-4 col-md-3 trashbin"></div>#}
+{#                <div class="col-xs-4 col-md-6"></div>#}
+{#                <div class="col-xs-4 col-md-3 feed" id="feed1">#}
+{#                    <div class="heart" id="like3" rel="unlike"></div>#}
+{#                    <div class="likeCount" id="likeCount3">{{ pdc.favour_count }}</div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="row product-describe-box">#}
+{#                <p class="describe-p">{{ pdc.title }}</p>#}
+{#            </div>#}
+{#        </div>#}
+{#        {% endfor %}#}
+    </div>
+    <a id="load-sent" class="load-style">loading</a><br>
+    <img id="load-gif" src="/static/img/loading.gif"/>
+</div>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/Trend.js' %}"></script>
+{% endblock %}

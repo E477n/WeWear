@@ -1,0 +1,70 @@
+{% extends 'basic.html' %}
+{% load static %}
+    {% block title %}<title>WeWear</title>{% endblock %}
+    {% block header-class %}
+        <header class="home-background img-shadow">
+    {% endblock %}
+    {% block header-add %}
+            <div class="container">
+            <div class="row text-align-center top-150 bottom-280">
+                <div class="row margin-top-15">
+                    <label for="inputlink" class="font-style1">复制淘宝服饰链接</label>
+                </div>
+                <div class="row margin-top-15">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control modal-input-adjust" id="inputlink" placeholder="link">
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row margin-top-15">
+                    <div class="row margin-bottom-15 modal-label-adjust warning-span-white">
+                        <span id="linkWarning"></span>
+                    </div>
+                    <div class="row">
+                        <button type="submit" class="btn btn-lg header-btn" onclick="turnToMatch()">开始搭配</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+        </div>
+    {% endblock %}
+        </header>
+    {% block body-container %}
+        <div class="container">
+        <div class="row top-200">
+            <div id="case1img" class="col-md-8 margin-top-15 case-img-box">
+                <img id="gucci1" src="/static/trendCases/gucci1.gif" class="img-responsive img-shadow" alt="Responsive image"/>
+            </div>
+            <div class="col-md-4 margin-top-15">
+                <p class="case-p">设计灵感源自艾尔顿·约翰爵士（Sir Elton John）单曲《Levon》唱片封面的精选系列。</br>
+                    单曲《Levon》问世于1971年，由艾尔顿·约翰爵士作曲，伯尼·陶平（Bernie Taupin）作词，曲风别具一格，讲述了一个厌倦以吹气球为生的男人的故事。</br>
+                    单曲封面配图是一只流泪的眼睛，此元素运用于2018春夏艾尔顿·约翰（Elton John）特别系列中的皮革手袋、T恤和卫衣之上。
+                </p>
+                <a href="https://www.gucci.cn/zh/st/stories/fashion-themes/article/spring-summer-2018-gucci-elton-john" target="_blank"><button type="submit" class="btn btn-lg body-button">VIEW MORE</button></a>
+            </div>
+        </div>
+        <div class="row top-200">
+            <div class="col-md-4 margin-top-15">
+                <p class="case-p">AderError不久前释出的秋冬系列,用大胆而丰富的色彩带你领略复古的街头感。 AderError此次秋冬系列为我们带来了风格迥异的外套, oversized款式和丰富的色彩打破了秋冬季节的沉闷与低调。</p>
+                <a href="http://en.adererror.com/category/new-collection/65/" target="_blank"><button type="submit" class="btn btn-lg body-button">VIEW MORE</button></a>
+            </div>
+            <div class="col-md-8 margin-top-15" onmouseover="case2change_1()" onmouseout="case2change_2()">
+                <img id="case2-1" src="/static/trendCases/case-1.jpg" class="img-responsive img-shadow" alt="Responsive image"/>
+                <img id="case2-2" src="/static/trendCases/case-2.jpg" class="img-responsive img-shadow" alt="Responsive image" style="display: none"/>
+            </div>
+        </div>
+        <div class="row top-200">
+            <div class="col-md-8 margin-top-15" onmouseover="case3change_1()" onmouseout="case3change_2()">
+                <img id="case3-1" src="/static/trendCases/case3.jpg" class="img-responsive img-shadow" alt="Responsive image"/>
+                <img id="case3-2" src="/static/trendCases/case4.jpg" class="img-responsive img-shadow" alt="Responsive image" style="display: none"/>
+            </div>
+            <div class="col-md-4 margin-top-15">
+                <p class="case-p">玛利亚·嘉西亚·基乌里为Dior设计的首个高级定制系列时装秀</br>全新剪裁的套装与氤氲夜晚气息的梦幻连衣裙……玛莉亚·嘉西亚·基乌里以这一系列的五十九套臻美造型，精彩诠释了她对Dior迪奥高级定制时装的理念。</p>
+                <a href="https://www.dior.cn/diormag/zh_cn/article/%E6%97%B6%E8%A3%85%E7%A7%80" target="_blank"><button type="submit" class="btn btn-lg body-button">VIEW MORE</button></a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

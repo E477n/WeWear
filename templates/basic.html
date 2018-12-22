@@ -1,0 +1,476 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1", maximum-scale=1, user-scalable=no">
+
+    {% block title %}<title>WeWear</title>{% endblock %}
+
+    <link rel="shortcut icon" href="{% static 'img/ww_icon.ico' %}">
+    {% block add-css-script %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Home.css' %}">
+    {#bootstrap#}
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{#    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>#}
+    {#datetime#}
+    <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    {#multi-choice#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+    {#font awesome#}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}"/>
+</head>
+<body>
+    {% block header-class %}<header class="home-background img-shadow">{% endblock %}
+        <div class="row bottom-30 header-row">
+                <div class="col-xs-8 col-sm-8 col-md-2 padding-left-50">
+                    <ul class="logo-ul-style"><li class="header-logo" value="/" onclick="checkIfUserLogIn(this)"><a><img src="{% static 'img/logo1-2.png'%}" height="70" width="140"/></a></li></ul>
+                </div>
+                <div id="headerBtnArea" class="col-xs-4 col-sm-4 col-md-2 col-md-push-8 margin-top-15 padding-right-50 display-inline-flex">
+                    <button id="btnLogin" class="btn header-btn" type="button" data-toggle="modal" data-target="#signin">登录</button>
+                        <!-- Modal Sign in -->
+                        <div class="modal fade" id="signin" tabindex="-1" role="dialog" aria-labelledby="signinLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header modal-title-style modal-header-style">
+                                <button type="button" class="close modal-btn-close-style" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">sign in</h4>
+                              </div>
+                              <div class="modal-body">
+                                <div class="modal-card">
+                                <form>
+                                    <div class="form-group">
+                                        <div class="row margin-top-15">
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-2 modal-label-adjust">
+                                                <label>用户名：</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control modal-input-adjust" id="inputUsername" placeholder="username" onblur="checkEmpty(this)">
+                                            </div>
+                                        </div>
+                                        <div class="row margin-top-15">
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-2 modal-label-adjust">
+                                                <label>密&emsp;码：</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="password" class="form-control modal-input-adjust" id="inputPassword" placeholder="password" onblur="checkEmpty(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                </div>
+                              </div>
+                              <div class="modal-footer text-align-center modal-footer-style">
+                                  <div class="row margin-bottom-15 modal-label-adjust warning-span">
+                                      <span id="logincondition"></span>
+                                  </div>
+                                  <div class="row">
+                                      <button type="button" class="btn body-button" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn body-button" onclick="logIn()">登录</button>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <button id="btnSignup" class="btn header-btn" type="button" data-toggle="modal" data-target="#signup" onclick="openSignupModal()">注册</button>
+                        <!-- Modal Sign up-->
+                        <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="signupLabel">
+                          <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header modal-title-style modal-header-style">
+                                <button type="button" class="close modal-btn-close-style" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">sign up</h4>
+                              </div>
+                              <div class="modal-body text-align-center">
+                                  <div class="progress text-align-center">
+                                      <div id="signupProgressBar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                      </div>
+                                  </div>
+                                  <div class="row modal-signup-label">
+                                      <div class="col-xs-3 col-md-3">
+                                          <label>基本信息</label>
+                                      </div>
+                                      <div class="col-xs-3 col-md-3">
+                                          <label>风格标签</label>
+                                      </div>
+                                      <div class="col-xs-3 col-md-3">
+                                          <label>商品偏好</label>
+                                      </div>
+                                      <div class="col-xs-3 col-md-3">
+                                          <label>完成</label>
+                                      </div>
+                                  </div>
+                                  <div class="modal-card" id="signupCard1">
+                                      <form>
+                                          <div class="form-group">
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                <div class="row margin-top-15">
+                                                    <div class="col-md-4 modal-label-adjust">
+                                                        <label>邮&emsp;箱：</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control modal-input-adjust" id="inputEmail" placeholder="email" onclick="signupCardSwitch1()" onblur="checkEmpty(this)">
+                                                    </div>
+                                                </div>
+                                                <div class="row margin-top-15">
+                                                    <div class="col-md-4 modal-label-adjust">
+                                                        <label>用户名：</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control modal-input-adjust" id="inputUsername-s" placeholder="username" onblur="checkEmpty(this)">
+                                                    </div>
+                                                </div>
+                                                <div class="row margin-top-15">
+                                                    <div class="col-md-4 modal-label-adjust">
+                                                        <label>密&emsp;码：</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="password" class="form-control modal-input-adjust" id="inputPassword-s" placeholder="password" onblur="checkEmpty(this)">
+                                                    </div>
+                                                </div>
+                                                <div class="row margin-top-15">
+                                                    <div class="col-md-4 modal-label-adjust">
+                                                        <label>确认密码：</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="password" class="form-control modal-input-adjust" id="inputPassword_check" placeholder="repeat password" onblur="checkEmpty(this)">
+                                                    </div>
+                                                </div>
+                                              </div>
+                                                <div class="col-md-6">
+                                                <div class="row margin-top-15">
+                                                    <div class="col-md-4 modal-label-adjust">
+                                                        <label>性&emsp;别：</label>
+                                                    </div>
+                                                    <div class="col-md-8 text-align-left" id="radio_sex">
+                                                        <label class="radio-label">
+                                                            <input type="radio" class="radio-old-style" name="Sex" value="male" />
+                                                            <span class="radio-new-style"></span>男
+                                                        </label>
+                                                        <label class="radio-label">
+                                                            <input type="radio" class="radio-old-style" name="Sex" value="female"/>
+                                                            <span class="radio-new-style"></span>女
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="row margin-top-15">
+                                                    <div class="col-md-4 modal-label-adjust">
+                                                        <label>出生日期：</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group date" data-provide="datepicker">
+                                                            <input type="text" class="form-control modal-input-adjust" id='datetime' placeholder="YYYY-MM-DD" onclick="datetimePicker()" onblur="checkEmpty(this)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row margin-top-15">
+                                                    <div class="col-md-4 modal-label-adjust">
+                                                        <label>职&emsp;业：</label>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group" id="multipicker">
+                                                                <select id="usertype" name="usertype" class="selectpicker show-tick form-control" multiple data-live-search="false">
+                                                                        <option value="0">学生</option>
+                                                                        <option value="1">教师</option>
+                                                                        <option value="2">蓝领</option>
+                                                                        <option value="3">白领</option>
+                                                                        <option value="4">科学家</option>
+                                                                        <option value="4">艺术家</option>
+                                                                        <option value="5">运动员</option>
+                                                                        <option value="6">媒体人</option>
+                                                                        <option value="4">设计师</option>
+                                                                        <option value="7">IT从业者</option>
+                                                                        <option value="8">商人</option>
+                                                                        <option value="9">其他</option>
+                                                                </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row margin-top-5">
+                                                    <div class="col-md-4 modal-label-adjust">
+                                                        <label>服饰支出（/月）：</label>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control modal-input-adjust" id="inputMonthEXPD" placeholder="RMB" onblur="checkEmpty(this)">
+                                                    </div>
+                                                </div>
+                                              </div>
+                                              </div>
+                                              <div class="row margin-top-15">
+                                                  <div class="row margin-bottom-15 modal-label-adjust warning-span">
+                                                      <span id="signinCondition"></span>
+                                                  </div>
+                                                  <button type="button" class="btn body-button" id="signupCardButton1" onclick="signupCardSwitch12()">下一步</button>
+                                              </div>
+                                          </div>
+                                      </form>
+                                  </div>
+                                  <div class="modal-card" id="signupCard2">
+                                      <form>
+                                          <div class="form-group">
+                                              <div class="row margin-top-15">
+                                                <label>请选择你喜欢的风格</label>
+                                              </div>
+                                              <div class="row margin-top-15">
+                                                  <div class="col-md-1"></div>
+                                                  <div class="col-md-10">
+                                                      <div class="table-responsive">
+                                                          <table id="chooseStyle1" class="table modal-table-style" onclick="chooseStyleLabel()">
+                                                                <tr>
+                                                                    <td><button value="allmatch" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">百搭</button></td>
+                                                                    <td><button value="hippie" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">嘻皮</button></td>
+                                                                    <td><button value="gothic" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">哥特</button></td>
+                                                                    <td><button value="harajuku" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">原宿</button></td>
+                                                                    <td><button value="gentlewomanly" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">淑女</button></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><button value="elegant" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">优雅</button></td>
+                                                                    <td><button value="korean" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">韩版</button></td>
+                                                                    <td><button value="vintage" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">复古</button></td>
+                                                                    <td><button value="artistic" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">文艺</button></td>
+                                                                    <td><button value="folk" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">民族</button></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><button value="western" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">欧美</button></td>
+                                                                    <td><button value="preppy" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">学院</button></td>
+                                                                    <td><button value="office" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">职业</button></td>
+                                                                    <td><button value="workday" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">通勤</button></td>
+                                                                    <td><button value="neutral" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">中性</button></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><button value="hippop" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">嘻哈</button></td>
+                                                                    <td><button value="japanese" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">日系</button></td>
+                                                                    <td><button value="british" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">英伦</button></td>
+                                                                    <td><button value="punk" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">朋克</button></td>
+                                                                    <td><button value="lolita" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">洛丽塔</button></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><button value="street" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">街头</button></td>
+                                                                    <td><button value="sporty" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">运动</button></td>
+                                                                    <td><button value="casual" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">休闲</button></td>
+                                                                    <td><button value="bohemia" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">波西米亚</button></td>
+                                                                    <td><button value="baroque" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">巴洛克</button></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><button value="sweet" type="button" class="btn body-button" onclick="chooseStyleLabel(this)">甜美</button></td>
+                                                                </tr>
+                                                          </table>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-md-1"></div>
+                                              </div>
+                                              <div class="row margin-top-15">
+                                                  <button type="button" class="btn body-button" id="signupCardButton2" onclick="signupCardSwitch23()">下一步</button>
+                                              </div>
+                                          </div>
+                                      </form>
+                                  </div>
+                                  <div class="modal-card" id="signupCard3">
+                                      <form>
+                                          <div class="form-group">
+                                              <div class="row margin-top-15">
+                                                <label>点击选择你喜欢的商品</label>
+                                              </div>
+                                              <div class="row margin-top-15">
+                                                  <div class="col-md-12">
+                                                      <button type="button" class="btn body-button" id="img-card-switch-button" onclick="imgCardSwitch()">换一组</button>
+                                                      <div id="chooseStyle2" class="table-responsive">
+                                                          <table class="table modal-table-img-style" id="img-card-1">
+                                                                <tr>
+                                                                    <td abbr="allmatch" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/allmatch-1.jpg"/></td>
+                                                                    <td abbr="bohemia" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/bohemia-1.jpg"/></td>
+                                                                    <td abbr="artistic" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/artistic-1.jpg"/></td>
+                                                                    <td abbr="british" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/british-1.jpg"/></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td abbr="baroque" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/baroque-1.jpg"/></td>
+                                                                    <td abbr="casual" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/casual-1.jpg"/></td>
+                                                                    <td abbr="preppy" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/preppy-3.jpg"/></td>
+                                                                    <td abbr="elegant" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/elegant-1.jpg"/></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td abbr="folk" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/folk-1.jpg"/></td>
+                                                                    <td abbr="gentlewomanly" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/gentlewomanly-1.jpg"/></td>
+                                                                    <td abbr="gothic" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/gothic-1.jpg"/></td>
+                                                                    <td abbr="harajuku" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/harajuku-1.png"/></td>
+                                                                </tr>
+                                                          </table>
+                                                          <table class="table modal-table-img-style" id="img-card-2">
+                                                                <tr>
+                                                                    <td abbr="hippie" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/hippie-1.jpg"/></td>
+                                                                    <td abbr="hippop" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/hippop-1.jpg"/></td>
+                                                                    <td abbr="japanese" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/japanese-1.jpg"/></td>
+                                                                    <td abbr="korean" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/korean-1.jpg"/></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td abbr="lolita" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/lolita-1.jpg"/></td>
+                                                                    <td abbr="neutral" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/neutral-1.jpg"/></td>
+                                                                    <td abbr="office" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/office-1.jpg"/></td>
+                                                                    <td abbr="preppy" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/preppy-1.jpg"/></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td abbr="punk" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/punk-1.jpg"/></td>
+                                                                    <td abbr="sporty" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/sporty-1.jpg"/></td>
+                                                                    <td abbr="street" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/street-1.jpg"/></td>
+                                                                    <td abbr="sweet" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/sweet-1.jpg"/></td>
+                                                                </tr>
+                                                          </table>
+                                                          <table class="table modal-table-img-style" id="img-card-3">
+                                                                <tr>
+                                                                    <td abbr="vintage" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/vintage-1.jpg"/></td>
+                                                                    <td abbr="western" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/western-1.jpg"/></td>
+                                                                    <td abbr="workday" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/workday-1.jpg"/></td>
+                                                                    <td abbr="allmatch" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/allmatch-2.jpg"/></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td abbr="artistic" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/artistic-2.jpg"/></td>
+                                                                    <td abbr="baroque" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/baroque-2.jpg"/></td>
+                                                                    <td abbr="british" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/british-2.jpg"/></td>
+                                                                    <td abbr="casual" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/casual-2.jpg"/></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td abbr="folk" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/folk-2.jpg"/></td>
+                                                                    <td abbr="hippop" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/hippop-2.jpg"/></td>
+                                                                    <td abbr="korean" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/korean-2.jpg"/></td>
+                                                                    <td abbr="office" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/office-2.jpg"/></td>
+                                                                </tr>
+                                                          </table>
+                                                          <table class="table modal-table-img-style" id="img-card-4">
+                                                                <tr>
+                                                                    <td abbr="preppy" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/preppy-2.jpg"/></td>
+                                                                    <td abbr="sporty" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/sporty-2.jpg"/></td>
+                                                                    <td abbr="street" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/street-2.jpg"/></td>
+                                                                    <td abbr="vintage" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/vintage-2.jpg"/></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td abbr="workday" onclick="chooseStyleImage(this)"><img src="/static/img/style-label-img/workday-2.jpg"/></td>
+                                                                </tr>
+                                                          </table>
+                                                          </table>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </form>
+                                      <button type="button" class="btn body-button margin-bottom-15" id="signupCardButton3" onclick="signupCardSwitch34()">下一步</button>
+                                  </div>
+                                  <div class="modal-card" id="signupCard4">
+                                      <div class="row margin-top-15">
+                                        <label>注册完成</label>
+                                      </div>
+                                      <div class="row margin-top-15">
+                                        <img src="/static/img/logo1-1.png" width="200px" height="100px"/>
+                                      </div>
+                                      <div class="row margin-top-15 margin-bottom-15">
+                                        <button type="button" class="btn body-button" data-dismiss="modal" data-toggle="modal" data-target="#signin">Close</button>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="modal-footer text-align-center modal-footer-style">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                </div>
+                <!-- Modal User information -->
+                <div class="modal fade" id="userInfo" tabindex="-1" role="dialog" aria-labelledby="userinfoLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header modal-title-style modal-header-style">
+                                <button type="button" class="close modal-btn-close-style" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Personal Information</h4>
+                              </div>
+                              <div class="modal-body">
+                                <div class="modal-card">
+                                    <div class="row user-info-card">
+                                        <div class="row margin-top-15">
+                                            <label class="modal-label-adjust">用户名:</label>
+                                            <label class="modal-label-adjust" id="lbl_username"></label>
+                                        </div>
+                                        <div class="row margin-top-15">
+                                            <label class="modal-label-adjust">邮箱：</label>
+                                            <label class="modal-label-adjust" id="lbl_email"></label>
+                                        </div>
+                                        <div class="row margin-top-15">
+                                            <label class="modal-label-adjust">性别：</label>
+                                            <label class="modal-label-adjust" id="lbl_sex"></label>
+                                        </div>
+                                        <div class="row margin-top-15">
+                                            <label class="modal-label-adjust">生日：</label>
+                                            <label class="modal-label-adjust" id="lbl_birthday"></label>
+                                        </div>
+                                        <div class="row margin-top-15 margin-bottom-15">
+                                            <label class="modal-label-adjust">职业：</label>
+                                            <label class="modal-label-adjust" id="lbl_job"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer text-align-center modal-footer-style">
+                                <button type="button" class="btn body-button" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                <div class="col-xs-12 col-sm-8 col-md-6 margin-top-15 padding-left-50">
+                    <ul class="nav nav-tabs nav-style">
+                        <li role="presentation" value="/" onclick="checkIfUserLogIn(this)"><a>Home</a></li>
+                        <li role="presentation" value="/trend/" onclick="checkIfUserLogIn(this)"><a>趋势</a></li>
+                        <li role="presentation" value="/match/" onclick="checkIfUserLogIn(this)"><a>搭配</a></li>
+                        <li role="presentation"><a href="#contact">联系我们</a></li>
+                    </ul>
+                </div>
+            </div>
+        {% block header-add %}{% endblock %}
+    </header>
+{% block body-container %} {% endblock %}
+    <footer class="row-footer top-200" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-7 col-sm-4">
+                    <h5 class="border-bottom-line">Links</h5>
+                    <ul class="list-unstyled"><!-- display without bullets -->
+                        <li value="/" onclick="checkIfUserLogIn(this)"><a>Home</a></li>
+                        <li value="/trend/" onclick="checkIfUserLogIn(this)"><a>Trend</a></li>
+                        <li value="/match/" onclick="checkIfUserLogIn(this)"><a>Match</a></li>
+                        <li><a href="">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-7 col-sm-4">
+                    <h5 class="border-bottom-line">Our Address</h5>
+                    <address>
+		              Donghua University<br>
+		              1882 West Yanan Road<br>
+		              Shanghai,China<br>
+		              <i class="fa fa-envelope"></i>: <a href="mailto:merestnora@outlook.com">merestnora@outlook.com</a>
+		           </address>
+                </div>
+                <div class="col-xs-7 col-sm-4">
+                    <div  class="nav navbar-nav">
+                        <a class="btn btn-social-icon btn-google-plus" href="http://google.com/+"><i class="fa fa-google-plus"></i></a>
+                       <a class="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id="><i class="fa fa-facebook"></i></a>
+                        <a class="btn btn-social-icon btn-linkedin" href="http://www.linkedin.com/in/"><i class="fa fa-linkedin"></i></a>
+                        <a class="btn btn-social-icon btn-twitter" href="http://twitter.com/"><i class="fa fa-twitter"></i></a>
+                        <a class="btn btn-social-icon btn-youtube" href="http://youtube.com/"><i class="fa fa-youtube"></i></a>
+                        <a class="btn btn-social-icon" href="mailto:"><i class="fa fa-envelope-o"></i></a>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <p style="padding:10px;"></p>
+                    <p align="center">©Copyright 2018 We Wear</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+<script src="{% static 'js/Home.js' %}"></script>
+{% block js %}{% endblock %}
+</body>

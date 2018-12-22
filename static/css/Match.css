@@ -1,0 +1,115 @@
+@media screen and (min-width:993px){
+    .home-background-basic{
+        background-image: url(/static/img/home-bg-2-basic.jpg);
+        background-repeat:no-repeat;
+        background-size:cover;
+        overflow:hidden;
+        height: 70px;
+    }
+}
+@media screen and (max-width:992px){
+    .home-background-basic{
+        background-image: url(/static/img/home-bg-2-basic.jpg);
+        background-repeat:no-repeat;
+        background-size:cover;
+        overflow:hidden;
+        height: 123px;
+    }
+}
+
+/*position*/
+.margin-top-50{
+    margin-top: 50px;
+}
+.margin-left-20{
+    margin-left: 20px !important;
+}
+.margin-left--15{
+    margin-left: -15px;
+}
+.margin-left-15{
+    margin-left: 15px;
+}
+.margin-right-20{
+    margin-right: 20px !important;
+}
+
+.img-shadow-basic{
+    box-shadow: 0;
+}
+.match-box{
+    border: 2px dashed rgb(17,45,138);
+    border-radius: 20px;
+}
+.match-box-1{
+    height: 500px;
+    padding: 10px;
+}
+.match-box-2{
+    height: 300px;
+    padding: 10px;
+}
+.input-img-style{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/*match category*/
+.match-cate-modal{
+    border: 1px solid rgb(17,45,138) !important;
+    font-family: pf-w3;
+}
+.match-cate-modal:hover{
+    border: 2px solid rgb(17,45,138) !important;
+}
+
+/*match result*/
+.img-result-a{
+    max-height: 250px;
+    max-width: 250px;
+}
+.result-img{
+    max-height: 220px;
+    max-width: 250px !important;
+}
+.result-img:hover{
+    border: 2px solid rgb(17,45,138);
+}
+.hover-info-style{
+    font-family: Quicksand-Regular;
+    font-size: 10px;
+    text-align: left;
+    padding: 5px;
+    background-color: #ffffff;
+    opacity: 0.8;
+    position:absolute;
+    border: 2px dashed rgb(17,45,138);
+    border-radius: 10px;
+    height: 150px;
+    width: 250px;
+    display: none;
+}
+.match-table-img-style{
+    margin-bottom: 0px;
+}
+.match-table-img-style tr>td{
+    text-align: center;
+    border-top: 0px !important;
+    width: 150px;
+    height: 210px;
+    background-color: white;
+}
+.match-table-img-style tr>td>img{
+    height: 100%;
+}
+#feedback-line{
+    display: none;
+}
+.feedback-style{
+    font-size: 20px !important;
+    color: rgb(17,45,138);
+}
+.feedback-style:hover{
+    color: lightpink;
+    cursor: pointer;
+}
